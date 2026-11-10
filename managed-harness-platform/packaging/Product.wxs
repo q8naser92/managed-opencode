@@ -1,0 +1,66 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Managed OpenCode $(var.Role)" Manufacturer="Managed OpenCode Project" Version="$(var.Version)" UpgradeCode="$(var.UpgradeCode)" Scope="perMachine" InstallerVersion="500" Compressed="yes">
+    <MajorUpgrade DowngradeErrorMessage="A newer Managed OpenCode version is already installed." Schedule="afterInstallInitialize" />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+    <Launch Condition="VersionNT64 AND Privileged" Message="Administrator installation on 64-bit Windows is required." />
+    <Property Id="CONFIGFILE" Secure="yes" Hidden="yes" />
+    <Property Id="MANAGEDTXID" Secure="yes" Hidden="yes" />
+    <Binary Id="ManagedActions" SourceFile="dist/CustomActions/CustomActions.CA.dll" />
+    <CustomAction Id="BeginManagedTransaction" BinaryRef="ManagedActions" DllEntry="BeginTransaction" Execute="immediate" Return="check" />
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="BaseDir" Name="ManagedOpenCodeCentral">
+        <Directory Id="CommonDir" Name="Setup">
+          <Component Id="CommonConfiguration" Guid="3E8AB33E-0458-4CC5-A1A6-2A37FA42C877" Bitness="always64">
+            <File Id="ConfigureScript" Source="packaging/Configure-Installation.ps1" KeyPath="yes" />
+            <File Source="packaging/Set-InstallationPermissions.ps1" />
+            <File Id="ConfigurationGui" Source="dist/Setup/ManagedConfigure.exe" />
+          </Component>
+        </Directory>
+        <Directory Id="InstallDir" Name="$(var.Role)">
+          <?if $(var.Role) = Client ?>
+          <Component Id="ClientGui" Guid="A61AE101-42DC-4F22-884C-F6FFEB1461EE" Bitness="always64">
+            <File Id="ClientExe" Source="dist/Client/ManagedOpenCode.exe" KeyPath="yes">
+              <Shortcut Id="ClientShortcut" Directory="ProgramMenuFolder" Name="Managed OpenCode" Advertise="yes" />
+            </File>
+          </Component>
+          <Component Id="Engine" Guid="A61AE102-42DC-4F22-884C-F6FFEB1461EE" Bitness="always64">
+            <File Id="EngineExe" Source="dist/Client/opencode-engine.exe" KeyPath="yes" />
+          </Component>
+          <?else?>
+          <Component Id="Service" Guid="A61AE103-42DC-4F22-884C-F6FFEB1461EE" Bitness="always64">
+            <File Id="ServiceExe" Source="dist/Server/managed-service.exe" KeyPath="yes" />
+            <ServiceInstall Id="ServiceInstall" Name="ManagedOpenCodeServer" DisplayName="Managed OpenCode Server" Description="Central policy, identity, approved AI models and connectors." Type="ownProcess" Start="auto" ErrorControl="normal" Account="NT SERVICE\ManagedOpenCodeServer" Vital="yes" />
+            <ServiceControl Id="ServiceControl" Name="ManagedOpenCodeServer" Stop="both" Start="install" Remove="uninstall" Wait="yes" />
+          </Component>
+          <Component Id="Server" Guid="A61AE104-42DC-4F22-884C-F6FFEB1461EE" Bitness="always64">
+            <File Id="ServerExe" Source="dist/Server/managed-server.exe" KeyPath="yes" />
+          </Component>
+          <?endif?>
+        </Directory>
+      </Directory>
+    </StandardDirectory>
+    <Feature Id="Main" Title="Managed OpenCode $(var.Role)" Level="1">
+      <ComponentRef Id="CommonConfiguration" />
+      <?if $(var.Role) = Client ?>
+      <ComponentRef Id="ClientGui" /><ComponentRef Id="Engine" />
+      <?else?>
+      <ComponentRef Id="Service" /><ComponentRef Id="Server" />
+      <?endif?>
+    </Feature>
+    <CustomAction Id="Configure" Directory="System64Folder" ExeCommand="&quot;[System64Folder]WindowsPowerShell\v1.0\powershell.exe&quot; -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File &quot;[#ConfigureScript]&quot; -Role $(var.Role) -Mode Configure -TransactionId [MANAGEDTXID] -ConfigFile &quot;[CONFIGFILE]&quot;" Execute="deferred" Impersonate="no" Return="check" HideTarget="yes" />
+    <CustomAction Id="RollbackConfiguration" Directory="System64Folder" ExeCommand="&quot;[System64Folder]WindowsPowerShell\v1.0\powershell.exe&quot; -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File &quot;[#ConfigureScript]&quot; -Role $(var.Role) -Mode Rollback -TransactionId [MANAGEDTXID]" Execute="rollback" Impersonate="no" Return="ignore" />
+    <!-- Commit only collects the backup. Partial cleanup must never trigger restoration from that backup. -->
+    <CustomAction Id="CommitConfiguration" Directory="System64Folder" ExeCommand="&quot;[System64Folder]WindowsPowerShell\v1.0\powershell.exe&quot; -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File &quot;[#ConfigureScript]&quot; -Role $(var.Role) -Mode Commit -TransactionId [MANAGEDTXID]" Execute="commit" Impersonate="no" Return="ignore" />
+    <CustomAction Id="RemoveFirewall" Directory="System64Folder" ExeCommand="&quot;[System64Folder]WindowsPowerShell\v1.0\powershell.exe&quot; -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File &quot;[#ConfigureScript]&quot; -Role $(var.Role) -Mode Uninstall" Execute="deferred" Impersonate="no" Return="check" />
+    <CustomAction Id="VerifyServer" Directory="System64Folder" ExeCommand="&quot;[System64Folder]WindowsPowerShell\v1.0\powershell.exe&quot; -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File &quot;[#ConfigureScript]&quot; -Role $(var.Role) -Mode Verify" Execute="deferred" Impersonate="no" Return="check" />
+    <InstallExecuteSequence>
+      <Custom Action="BeginManagedTransaction" Before="InstallInitialize" Condition="NOT REMOVE~=&quot;ALL&quot;" />
+      <Custom Action="RollbackConfiguration" After="InstallServices" Condition="NOT REMOVE~=&quot;ALL&quot;" />
+      <Custom Action="VerifyServer" After="StartServices" Condition="NOT REMOVE~=&quot;ALL&quot;" />
+      <Custom Action="Configure" After="RollbackConfiguration" Condition="NOT REMOVE~=&quot;ALL&quot;" />
+      <Custom Action="CommitConfiguration" After="Configure" Condition="NOT REMOVE~=&quot;ALL&quot;" />
+      <Custom Action="RemoveFirewall" Before="RemoveFiles" Condition="REMOVE~=&quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE" />
+    </InstallExecuteSequence>
+  </Package>
+</Wix>

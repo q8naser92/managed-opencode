@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net472</TargetFramework><PlatformTarget>x64</PlatformTarget><Platform>x64</Platform><GenerateAssemblyInfo>false</GenerateAssemblyInfo><EnableDefaultCompileItems>false</EnableDefaultCompileItems></PropertyGroup>
+  <ItemGroup><Compile Include="CustomActions.cs"/><Content Include="CustomAction.config"/><PackageReference Include="WixToolset.Dtf.CustomAction" Version="5.0.2"/><PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net472" Version="1.0.3" PrivateAssets="all"/></ItemGroup>
+</Project>
