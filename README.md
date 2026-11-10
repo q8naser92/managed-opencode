@@ -38,6 +38,8 @@ Server policy schema compatibility, default denial, explicit approval, grant
 ownership, one-use consumption, central revocation and security event acceptance;
 engine configuration-source restrictions, strict HTTPS origin parsing, shell
 selection, child environment filtering, actual zsh/bash startup-file behavior;
+real synthetic HTTPS tests for custom-CA trust, invalid certificates, modified CA
+bundles, caller TLS overrides, inherited proxy/TLS environment and redirects;
 successful native architecture build and basic executable startup.
 
 The source snapshot includes upstream test fixtures and synthetic test certificates.
@@ -62,8 +64,9 @@ come from the package registries described by the lockfiles and the upstream bui
 
 Do not expose the management server publicly just to run these tests. A rented
 remote Mac with a private test connection is an option for the interactive and
-Windows-server integration tests. No Mac rental, source publication, paid action
-run or Apple account enrollment has been performed.
+Windows-server integration tests. Preparing the bundle does not rent a Mac,
+publish source, dispatch an Actions run or enroll an Apple account. Actual runs
+require a separate authorized execution step; see RESULTS.md when present.
 
 References: [GitHub hosted runners](https://docs.github.com/en/actions/reference/runners/github-hosted-runners),
 [Apple Developer ID](https://developer.apple.com/developer-id/),

@@ -53,6 +53,8 @@ for name in sorted(set(tracked + additions)):
 
 files[".github/workflows/macos-validation.yml"] = (root / "cloud/macos-validation.yml").read_bytes()
 files["README.md"] = (root / "cloud/README.md").read_bytes()
+if (root / "cloud/RESULTS.md").exists():
+    files["RESULTS.md"] = (root / "cloud/RESULTS.md").read_bytes()
 files["UPSTREAM-REVISION.txt"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=fork)
 files[".gitignore"] = b"macos-evidence/\n**/node_modules/\n**/dist-macos-validation/\n**/test-results/\n"
 manifest = {name: hashlib.sha256(data).hexdigest() for name, data in sorted(files.items())}
