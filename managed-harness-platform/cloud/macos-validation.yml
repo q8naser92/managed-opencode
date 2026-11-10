@@ -34,14 +34,30 @@ jobs:
 
   macos-engine:
     needs: windows-server
+    name: macOS ${{ matrix.major }} / ${{ matrix.arch }} engine
     strategy:
       fail-fast: false
       matrix:
         include:
           - runner: macos-15
+            major: '15'
             arch: arm64
           - runner: macos-15-intel
+            major: '15'
             arch: x64
+          - runner: macos-26
+            major: '26'
+            arch: arm64
+          - runner: macos-26-intel
+            major: '26'
+            arch: x64
+          # GitHub names its macOS 27 Apple Silicon image after Xcode.
+          # validate-macos.sh checks the real OS; a runner label is not proof.
+          - runner: xcode-27
+            major: '27'
+            arch: arm64
+          # macOS 14 remains required, but its hosted images have retired.
+          # See SUPPORT.md for the separate-host validation requirement.
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 30
     steps:
@@ -55,12 +71,13 @@ jobs:
         shell: bash
         env:
           EXPECTED_MAC_ARCH: ${{ matrix.arch }}
+          EXPECTED_MAC_MAJOR: ${{ matrix.major }}
         run: bash managed-harness-platform/cloud/validate-macos.sh
       - name: Preserve test evidence and unsigned engine
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: macos-engine-validation-${{ matrix.arch }}
+          name: macos-engine-validation-${{ matrix.major }}-${{ matrix.arch }}
           path: macos-evidence/
           retention-days: 7
           if-no-files-found: error

@@ -5,6 +5,10 @@ Mac desktop release or an organization-ready Mac installer. The management serve
 remains a Windows product. The previously delivered Windows 0.1.4 installers are
 unchanged.
 
+The requested Mac client targets are **macOS 14, 15, 26 and 27**. See
+[SUPPORT.md](SUPPORT.md) for architecture coverage, the macOS 14 host gap and the
+release acceptance requirements. These targets are not yet a client release claim.
+
 The source includes a separate central `shell` permission for macOS zsh/bash,
 defaulting to Deny when reading older Windows policies. CMD and Windows PowerShell
 remain independent. The engine selects `/bin/zsh`, accepts only `/bin/zsh` or
@@ -19,9 +23,11 @@ installer and tested on real macOS before delivery.
 2. Upload the extracted source tree after approval. Do not upload lab directories,
    deployed configuration, databases, API keys, SSH keys or release evidence.
 3. In GitHub Actions, manually start **Managed macOS engine validation (not a client release)**.
-4. The first job tests server code on Windows Server 2022. Then two separate jobs
-   build and execute engine tests on real macOS 15, Apple Silicon and Intel.
-5. Download both `macos-engine-validation-*` artifacts and have an independent
+4. The first job tests server code on Windows Server 2022. Then five separate jobs
+   build and execute engine tests on macOS 15 and 26 (Apple Silicon and Intel),
+   and macOS 27 (Apple Silicon). Each job verifies its actual OS and architecture.
+   macOS 14 needs a separate host and is not covered by a green hosted run.
+5. Download the `macos-engine-validation-<major>-<arch>` artifacts and have an independent
    read-only reviewer judge the logs, tests and artifact hashes. A green workflow
    only validates the engine scope below.
 
