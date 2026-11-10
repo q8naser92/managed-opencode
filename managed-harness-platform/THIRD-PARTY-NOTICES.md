@@ -2,11 +2,9 @@
 
 Managed OpenCode management code is MIT licensed; see LICENSE. The bundled modified OpenCode engine retains the upstream MIT license, copyright 2025 opencode. This independent managed distribution does not imply endorsement by the upstream maintainers.
 
-The prepared **Windows 0.1.4 deployment bundle** includes `DEPENDENCY-LICENSES.zip`, containing the available dependency license/notice files and package metadata from its build environment, plus the OpenCode, Bun and WiX notices. Its inventory includes development tools and multiple versions; it is not an exact list of modules embedded in the executables. Packages that publish only license metadata are marked by an empty noticeFiles list. A complete organization-approved software composition/license audit remains outstanding.
+`DEPENDENCY-LICENSES.zip` contains the available dependency license/notice files and package metadata from the build environment, plus the OpenCode, Bun and WiX notices. Its inventory includes development tools and multiple versions; it is not an exact list of modules embedded in the executables. Packages that publish only license metadata are marked by an empty noticeFiles list. A complete organization-approved software composition/license audit remains outstanding.
 
-The prepared **Windows 0.1.4 companion source ZIP** contains the platform and modified OpenCode source, pinned lockfiles, Bun 1.4.4 source, and WiX source at commit `aa65968c419420d32e3e1b647aea0082f5ca5b78`. These two full release bundles are distinct from the development Git repository and cloud-validation source ZIP: the latter contain platform/fork source and guides, but do not embed the Bun/WiX source archives or `DEPENDENCY-LICENSES.zip`. The final installer release must supply the corresponding dependency materials; see [release requirements](cloud/RELEASING.md).
-
-WiX's DTF runtime is distributed with the MSI custom actions under MS-RL; preserve its accompanying source and license when redistributing the prepared package. Bun embeds libraries under several licenses, including JavaScriptCore; its full notice explains the pinned WebKit source/relink procedure. Preserve the upstream notices and terms.
+The companion source ZIP contains the platform and modified OpenCode source, pinned lockfiles, Bun 1.4.4 source, and WiX source at commit `aa65968c419420d32e3e1b647aea0082f5ca5b78`. WiX's DTF runtime is distributed with the MSI custom actions under MS-RL; its source and license must accompany redistribution. Bun embeds libraries under several licenses, including JavaScriptCore; its full notice explains the pinned WebKit source/relink procedure. Preserve the upstream notices and terms.
 
 Official source references:
 

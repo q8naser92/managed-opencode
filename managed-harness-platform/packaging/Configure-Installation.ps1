@@ -81,7 +81,7 @@ try{
       $probe=New-Object Net.Sockets.TcpListener ([Net.IPAddress]::Any),$port;try{$probe.Start()}finally{$probe.Stop()}
       $cert=Copy-Pem $config.tlsCert 'server-chain.pem' $true;$key=Copy-Pem $config.tlsKey 'server-key.pem' $true;$ca=Copy-Pem $config.caFile 'root.pem'
       $gateway=[Uri]$config.gatewayUrl;if(-not $gateway.IsAbsoluteUri -or $gateway.Scheme -ne 'https' -or $gateway.UserInfo -or $gateway.Fragment){throw 'Gateway URL must use HTTPS'}
-      $boot=@{origin=$origin;port=$port;tlsCert=$cert;tlsKey=$key;allowedOrigins=@($gateway.GetLeftPart([UriPartial]::Authority));initialPolicy=@{revision=0;gatewayUrl=$gateway.AbsoluteUri;cloudModels=$false;models=@();tools=@{read='ask';edit='ask';cmd='deny';powershell='deny';shell='deny'};maxCommandSeconds=60;maxSessionSteps=30;localAudit=$true}}
+      $boot=@{origin=$origin;port=$port;tlsCert=$cert;tlsKey=$key;allowedOrigins=@($gateway.GetLeftPart([UriPartial]::Authority));initialPolicy=@{revision=0;gatewayUrl=$gateway.AbsoluteUri;cloudModels=$false;models=@();tools=@{read='ask';edit='ask';cmd='deny';powershell='deny'};maxCommandSeconds=60;maxSessionSteps=30;localAudit=$true}}
       if($ca){$boot.caFile=$ca}
       if($config.saml){$saml=$config.saml;$boot.saml=@{entryPoint=$saml.entryPoint;idpIssuer=$saml.idpIssuer;idpCert=[IO.File]::ReadAllText((Copy-Pem $saml.idpCert 'idp-cert.pem' $true));entityId=$saml.entityId;signingKey=(Copy-Pem $saml.signingKey 'saml-key.pem' $true);signingCert=(Copy-Pem $saml.signingCert 'saml-cert.pem' $true);adminSubjects=@($saml.adminSubjects)}}
       Write-Json (Join-Path $data 'server.json') $boot

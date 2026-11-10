@@ -1,0 +1,30 @@
+{
+  "releaseTag": "v0.1.4-pilot.1",
+  "productVersion": "0.1.4",
+  "sourceSnapshotKind": "Archived post-build Windows source; publication snapshot is not an original build-commit or clean-build attestation.",
+  "publicSourceArchive": {
+    "redactedDocuments": [
+      "managed-harness-platform/RELEASE-NOTES.md"
+    ],
+    "file": "ManagedOpenCode-0.1.4-pilot.1-source.zip",
+    "sha256": "8f9caddd821c5162b0da8ac6a43dee7439e1bcbb8f7d5c6d1a10278c6ce0b02e"
+  },
+  "originalSourceArchive": {
+    "file": "ManagedOpenCode-0.1.4-source.zip",
+    "sha256": "a0a3be816e553ca0f36b9f08479d5b5856f8a4032f19060a55cd2d45e1a0f768"
+  },
+  "sourceArchiveEntriesOmittedFromGit": [
+    "third-party-source/wix-5.0.2-source.zip",
+    "third-party-source/bun-1.4.4-source.zip",
+    "ARCHIVE-MANIFEST.json"
+  ],
+  "unchangedInstallerAndAllowlistHashes": {
+    "ManagedOpenCode-Setup.exe": "7bcb9afcdbb9d45fa92eb8787aa26951a816d3b00a5b8f5b49d3f52364ff22fe",
+    "ManagedOpenCode-Client.msi": "69626e11bf9d29b1ccc631061a5fbde8ab40c0089920755117f34e1a7dee2850",
+    "ManagedOpenCode-Server.msi": "324bd2d1b6c21bcd95601033ce6b7634901790223730decf41a1b2bb8b4025ff",
+    "ALLOWLIST-SHA256.json": "a344fac169a715b09b33e20b635ad08f11130e02fcde7b0e87b0a2cfa4635857"
+  },
+  "productCodeChangedForPublication": false,
+  "macClientIncluded": false,
+  "signedBinaries": false
+}

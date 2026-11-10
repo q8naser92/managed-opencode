@@ -15,12 +15,12 @@ import { testEffect } from "../lib/effect"
 
 const it = testEffect(Layer.empty)
 
-describe("managed platform discovery", () => {
+describe("managed Windows discovery", () => {
   it.live("ignores environment, explicit file, inline config and system opt-out", () =>
     Effect.acquireDisposable(Effect.promise(() => tmpdir())).pipe(
       Effect.flatMap((tmp) => {
         const expected = EnterpriseConfig.directory()
-        return withEnv({ ProgramData: tmp.path, XDG_CONFIG_HOME: tmp.path, OPENCODE_CONFIG_DIR: tmp.path, OPENCODE_CONFIG_CONTENT: '{"model":"evil/x"}' }, () =>
+        return withEnv({ ProgramData: tmp.path, OPENCODE_CONFIG_CONTENT: '{"model":"evil/x"}' }, () =>
           Effect.gen(function* () {
             const sources = yield* ConfigDiscovery.discover({
               system: false,

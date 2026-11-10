@@ -3,14 +3,12 @@ export * as EnterpriseConfig from "./enterprise.js"
 import path from "node:path"
 import { dlopen } from "bun:ffi"
 import { AbsolutePath } from "../schema.js"
-import { ManagedMacOS } from "../managed-macos.js"
 
 // This fork is always managed. There is deliberately no environment or CLI opt-out.
 export const enabled = true
 
 export function directory() {
-  if (process.platform === "darwin") return AbsolutePath.make(ManagedMacOS.directory)
-  if (process.platform !== "win32") throw new Error("This managed build requires Windows or macOS")
+  if (process.platform !== "win32") throw new Error("This managed build requires Windows")
   const library = dlopen("shell32.dll", {
     SHGetFolderPathW: { args: ["ptr", "i32", "ptr", "u32", "ptr"], returns: "i32" },
   })

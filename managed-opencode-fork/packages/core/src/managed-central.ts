@@ -5,7 +5,6 @@ import { createHash, randomUUID } from "node:crypto"
 import { dlopen } from "bun:ffi"
 import { Effect, Schema } from "effect"
 import { ManagedTransport } from "./managed-transport.js"
-import { ManagedMacOS } from "./managed-macos.js"
 
 export class Unavailable extends Schema.TaggedError<Unavailable>()("ManagedCentral.Unavailable", {
   reason: Schema.String,
@@ -14,7 +13,7 @@ export class Unavailable extends Schema.TaggedError<Unavailable>()("ManagedCentr
 const Decision = Schema.Struct({ id: Schema.String, status: Schema.String, revision: Schema.Number })
 const Grant = Schema.Struct({ id: Schema.String, revision: Schema.Number, maxCommandSeconds: Schema.Number })
 const Catalog = Schema.Struct({ revision: Schema.Number })
-export type Capability = "read" | "edit" | "cmd" | "powershell" | "shell"
+export type Capability = "read" | "edit" | "cmd" | "powershell"
 
 export const request = Effect.fn("ManagedCentral.request")(function* (route: string, body?: unknown) {
   return yield* Effect.tryPromise({
@@ -71,18 +70,9 @@ export function systemDirectory() {
   } finally { library.close() }
 }
 
-export function defaultShell() {
-  if (process.platform === "darwin") return ManagedMacOS.shell
-  if (process.platform !== "win32") throw new Error("Unsupported managed client platform")
-  return path.join(systemDirectory(), "WindowsPowerShell", "v1.0", "powershell.exe")
-}
+export function defaultShell() { return path.join(systemDirectory(), "WindowsPowerShell", "v1.0", "powershell.exe") }
 
 export function shellCapability(shell: string): Capability {
-  if (process.platform === "darwin") {
-    ManagedMacOS.args(shell, "")
-    return "shell"
-  }
-  if (process.platform !== "win32") throw new Error("Unsupported managed client platform")
   const normalized = path.win32.resolve(shell).toLowerCase()
   if (normalized === defaultShell().toLowerCase()) return "powershell"
   if (normalized === path.join(systemDirectory(), "cmd.exe").toLowerCase()) return "cmd"
@@ -90,5 +80,5 @@ export function shellCapability(shell: string): Capability {
 }
 
 export function childEnvironment(env: Record<string, string | undefined>) {
-  return Object.fromEntries(Object.entries(env).filter(([key]) => !/^(MANAGED_OPENCODE_|OPENCODE_SERVER_|OPENCODE_PASSWORD$|BUN_BE_BUN$|BUN_OPTIONS$|NODE_OPTIONS$|BASH_ENV$|ENV$|ZDOTDIR$|SHELLOPTS$|BASHOPTS$|FPATH$|DYLD_|LD_PRELOAD$|BASH_FUNC_)/i.test(key)))
+  return Object.fromEntries(Object.entries(env).filter(([key]) => !/^(MANAGED_OPENCODE_|OPENCODE_SERVER_|OPENCODE_PASSWORD$|BUN_BE_BUN$|BUN_OPTIONS$|NODE_OPTIONS$)/i.test(key)))
 }

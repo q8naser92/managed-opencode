@@ -2,7 +2,6 @@ import { z } from "zod";
 import { isIP } from "node:net";
 
 export const Mode = z.enum(["deny", "ask", "allow"]);
-export const Capability = z.enum(["read", "edit", "cmd", "powershell", "shell"]);
 export const HttpsUrl = z.url().refine((v) => {
   const u = new URL(v);
   return u.protocol === "https:" && !u.username && !u.password && !u.hash;
@@ -14,8 +13,7 @@ export const Policy = z.object({
   gatewayUrl: HttpsUrl,
   cloudModels: z.boolean().default(false),
   models: z.array(Model).max(100),
-  // Older Windows policies must never implicitly grant access to macOS shells.
-  tools: z.object({ read: Mode, edit: Mode, cmd: Mode, powershell: Mode, shell: Mode.default("deny") }).strict(),
+  tools: z.object({ read: Mode, edit: Mode, cmd: Mode, powershell: Mode }).strict(),
   maxCommandSeconds: z.number().int().min(1).max(600),
   maxSessionSteps: z.number().int().min(1).max(200),
   localAudit: z.boolean().default(true),
@@ -51,7 +49,7 @@ export const Boot = z.object({
 }).strict();
 export type Boot = z.infer<typeof Boot>;
 export const Action = z.object({
-  id: z.string().regex(/^[a-f0-9-]{20,64}$/), capability: Capability,
+  id: z.string().regex(/^[a-f0-9-]{20,64}$/), capability: z.enum(["read", "edit", "cmd", "powershell"]),
   digest: z.string().regex(/^[a-f0-9]{64}$/), session: z.string().min(1).max(100),
   preview: z.string().max(4000).optional(),
 }).strict();

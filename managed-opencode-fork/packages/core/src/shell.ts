@@ -23,7 +23,6 @@ import { Config } from "./config.js"
 import { ToolOutput } from "./tool-output.js"
 import { ShellResult } from "./shell/result.js"
 import { ManagedCentral } from "./managed-central.js"
-import { ManagedMacOS } from "./managed-macos.js"
 
 export class NotFoundError extends Schema.TaggedError<NotFoundError>()("Shell.NotFoundError", {
   id: Shell.ID,
@@ -292,9 +291,7 @@ const layer = () =>
         invocation.timeout = Math.min(invocation.timeout || Infinity, grant.maxCommandSeconds * 1000)
 
         const id = Shell.ID.ascending()
-        const args = process.platform === "darwin"
-          ? ManagedMacOS.args(invocation.shell, invocation.command)
-          : ShellSelect.args(invocation.shell, invocation.command)
+        const args = ShellSelect.args(invocation.shell, invocation.command)
         const file = path.join(outputDir, `${id}.out`)
 
         const info: Info = {

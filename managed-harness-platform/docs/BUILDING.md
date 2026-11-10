@@ -1,12 +1,5 @@
 # Build from source
 
-These are the recorded Windows 0.1.4 build instructions. The development Git
-repository and cloud-validation source ZIP contain the platform/fork source and
-guides, but exclude the full release dependency archives and compiled installers.
-The current working source includes later changes; choose a new version and
-validate new outputs before a final release rather than claiming they reproduce
-the preserved 0.1.4 installers.
-
 Extract the source archive with `managed-harness-platform` and `managed-opencode-fork` beside one another. The fork is based on upstream commit `dc2ffcf8bf26f9e669b6aa22b95f50e12be15e06`; the archive contains the managed changes in place. There is no dependency on the private lab directories.
 
 Use x64 Windows, PowerShell 5.1 or later, .NET Framework 4.7.2 or later, Bun **1.4.4**, .NET SDK **10.0.403**, and WiX **5.0.2**. This is the recorded toolchain, not a claim that rebuilding produces byte-identical files: MSI identifiers, timestamps and upstream build inputs can differ. Deployment hosts do not need Bun, Node, the .NET SDK or WiX installed.
@@ -43,7 +36,7 @@ Return to the platform directory:
 
 Outputs are in `dist\Setup`. The native client and service use the Windows .NET Framework compiler. The server and engine embed the Bun runtime. The upstream web UI is omitted; this distribution uses the native managed GUI. Build network access is needed for dependency and native-runtime downloads. Follow the fork's AGENTS.md for its typechecking and tests.
 
-The full Windows 0.1.4 companion source archive supplies the pinned WiX source used by the MSI custom-action runtime and Bun source. Those archives are not embedded in this development Git repository or its cloud-validation source ZIP. The [third-party notices](../THIRD-PARTY-NOTICES.md) link to the pinned sources; the final installer release must include its corresponding dependency materials. Bun's own `LICENSE.md` explains how to fetch its pinned WebKit source and rebuild/relink its JavaScriptCore dependencies. Keep all dependency notices with redistributed binaries. Rebuilding and signing is the organization's responsibility when it adopts this project.
+The source archive also supplies the pinned WiX source used by the MSI custom-action runtime and Bun source. Bun's own `LICENSE.md` explains how to fetch its pinned WebKit source and rebuild/relink its JavaScriptCore dependencies. Keep all dependency notices with redistributed binaries. Rebuilding and signing is the organization's responsibility when it adopts this project.
 
 `script/assemble-release.py` is the release maintainer's packaging script. It expects compiled outputs and the upstream Bun/WiX source archives in `release-input`; it does not download or include any private lab configuration. Its license inventory is deliberately broader than the runtime dependency set and is not a certified SBOM.
 

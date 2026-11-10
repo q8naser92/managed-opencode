@@ -22,9 +22,9 @@ Version 0.1.2 serializes sign-in attempts, discards late responses after sign-ou
 
 ## Before broad deployment
 
-Complete the native SAML browser/loopback flow with the organization's identity provider, installer GUI/folder-picker acceptance, remaining desktop offline/timeout cases, backup/restore drill, application-control acceptance, capacity/load tests, and the bank's real LiteLLM network/certificate test. The lab uses synthetic model, SMTP and connector services. No claim is made that every commercial connector or model API shape works.
+Complete the native SAML browser/loopback flow with the organization's identity provider, installer GUI/folder-picker acceptance, remaining desktop offline/timeout cases, backup/restore drill, application-control acceptance, capacity/load tests, and the organization's real LiteLLM network/certificate test. The lab uses synthetic model, SMTP and connector services. No claim is made that every commercial connector or model API shape works.
 
-The binaries are unsigned. Public certificate trust and optional private-CA handling are implemented, but this lab could not reach the organization's production LiteLLM endpoint. Use the supplied hashes for a controlled pilot and follow your signing/application-control process before a broader rollout. Proxy negotiation, high availability, immutable audit export, automatic updates and cross-machine vault migration are not implemented.
+The binaries are unsigned. Public certificate trust and optional private-CA handling are implemented, but this lab could not reach `https://gateway.example.org/v1`. Use the supplied hashes for a controlled pilot and follow your signing/application-control process before a broader rollout. Proxy negotiation, high availability, immutable audit export, automatic updates and cross-machine vault migration are not implemented.
 
 The source and available dependency notices are included. An independent clean source rebuild and complete license/software-composition audit remain outstanding. Do not treat the dependency inventory as a certified runtime SBOM.
 

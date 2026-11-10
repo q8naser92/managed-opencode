@@ -23,41 +23,6 @@ function fixture() {
 }
 
 describe('central authority cannot be changed by user or AI sessions',()=>{
-  test('an existing Windows policy denies macOS shells without changing Windows permissions',async()=>{
-    const f=fixture();
-    // Simulate a database written by 0.1.4, before the macOS field existed.
-    const legacy={...f.policy,tools:{read:'allow',edit:'allow',cmd:'allow',powershell:'allow'}};
-    f.store.db.query("UPDATE settings SET value=? WHERE id='policy'").run(JSON.stringify(legacy));
-    expect(f.store.policy.tools).toEqual({read:'allow',edit:'allow',cmd:'allow',powershell:'allow',shell:'deny'});
-    const catalog=await (await f.call('/api/catalog')).json();
-    expect(catalog.tools.shell).toBe('deny');
-    const action={...f.action(),capability:'shell'};
-    expect((await (await f.call('/api/actions',undefined,'POST',action)).json()).status).toBe('denied');
-    expect((await f.call('/api/actions/consume',undefined,'POST',action)).status).toBe(403);
-    expect((await (await f.call('/api/actions',undefined,'POST',f.action())).json()).status).toBe('approved');
-  });
-  test('macOS shell approval is owned, consumed once, audited and revoked centrally',async()=>{
-    const f=fixture();
-    expect((await f.adminCall('/api/admin/policy','PUT',{...f.policy,tools:{...f.policy.tools,cmd:'deny',powershell:'deny',shell:'ask'}})).status).toBe(200);
-    const action={...f.action(),capability:'shell',preview:'printf approved'};
-    expect((await (await f.call('/api/actions',undefined,'POST',action)).json()).status).toBe('pending');
-    expect((await f.call('/api/actions/'+action.id+'/decision',f.engine.token,'POST',{approve:true})).status).toBe(403);
-    expect((await f.call('/api/actions/'+action.id+'/decision',f.bobDesktop.token,'POST',{approve:true})).status).toBe(404);
-    expect((await f.call('/api/actions/'+action.id+'/decision',f.aliceDesktop.token,'POST',{approve:true})).status).toBe(200);
-    expect((await f.call('/api/actions/consume',undefined,'POST',action)).status).toBe(200);
-    expect((await f.call('/api/actions/consume',undefined,'POST',action)).status).toBe(403);
-    expect((await f.call('/api/security-event',undefined,'POST',{event:'tool.started',id:action.id,capability:'shell',revision:1})).status).toBe(200);
-    expect(f.store.db.query("SELECT target FROM audit WHERE event='tool.started'").get()).toEqual({target:'shell'});
-    const policy=f.store.policy;
-    expect((await f.adminCall('/api/admin/policy','PUT',{...policy,tools:{...policy.tools,shell:'allow'}})).status).toBe(200);
-    const pending={...f.action(),capability:'shell'};
-    expect((await (await f.call('/api/actions',undefined,'POST',pending)).json()).status).toBe('approved');
-    expect((await (await f.call('/api/actions',undefined,'POST',f.action())).json()).status).toBe('denied');
-    const current=f.store.policy;
-    expect((await f.adminCall('/api/admin/policy','PUT',{...current,tools:{...current.tools,shell:'deny'}})).status).toBe(200);
-    expect((await f.call('/api/actions/consume',undefined,'POST',pending)).status).toBe(403);
-    expect((await (await f.call('/api/actions',undefined,'POST',{...f.action(),capability:'shell'})).json()).status).toBe('denied');
-  });
   test('ordinary user and engine cannot add a connector or modify policy',async()=>{
     const f=fixture();
     for(const token of [f.engine.token,f.aliceDesktop.token,f.adminEngine.token]) {

@@ -96,7 +96,7 @@ static class NativeClientGuiTests {
     }
     static async Task<string> Code(long since){
         for(int n=0;n<60;n++){
-            using(var request=new HttpRequestMessage(HttpMethod.Get,((string)fixture["mailOrigin"]).TrimEnd('/')+"/?email="+Uri.EscapeDataString((string)fixture["email"]))){request.Headers.Authorization=new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer",(string)fixture["mailToken"]);using(var response=await Mail.SendAsync(request)){response.EnsureSuccessStatusCode();var data=Map(Json.DeserializeObject(await response.Content.ReadAsStringAsync()));foreach(var item in (object[])data["messages"]){var message=Map(item);if(Convert.ToInt64(message["at"])>=since)return (string)message["code"];}}}
+            using(var request=new HttpRequestMessage(HttpMethod.Get,"https://192.168.1.117:8466/?email="+Uri.EscapeDataString((string)fixture["email"]))){request.Headers.Authorization=new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer",(string)fixture["mailToken"]);using(var response=await Mail.SendAsync(request)){response.EnsureSuccessStatusCode();var data=Map(Json.DeserializeObject(await response.Content.ReadAsStringAsync()));foreach(var item in (object[])data["messages"]){var message=Map(item);if(Convert.ToInt64(message["at"])>=since)return (string)message["code"];}}}
             await Task.Delay(250);
         }throw new TimeoutException("No fresh OTP reached the lab mailbox");
     }

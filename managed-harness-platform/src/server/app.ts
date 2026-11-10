@@ -4,7 +4,7 @@ import { HTTPException } from 'hono/http-exception';
 import { bodyLimit } from 'hono/body-limit';
 import { streamSSE } from 'hono/streaming';
 import { z } from 'zod';
-import { Action, Capability, Connector, HttpsUrl, Policy, Smtp, EmailAddress, approvedModels } from '../shared/schema.ts';
+import { Action, Connector, HttpsUrl, Policy, Smtp, EmailAddress, approvedModels } from '../shared/schema.ts';
 import type { Boot } from '../shared/schema.ts';
 import { Store } from './store.ts';
 import { Actions } from './actions.ts';
@@ -89,7 +89,7 @@ export function createApp(boot:Boot,store:Store) {
   });
   app.post('/api/security-event',async c=>{
     const p=c.get('principal');requireEngine(p);
-    const value=z.object({event:z.enum(['tool.started','tool.completed','tool.failed','tool.cancelled','client.disconnected']),id:z.string().regex(/^[a-f0-9-]{20,64}$/),capability:Capability,revision:z.number().int().nonnegative()}).strict().parse(await c.req.json());
+    const value=z.object({event:z.enum(['tool.started','tool.completed','tool.failed','tool.cancelled','client.disconnected']),id:z.string().regex(/^[a-f0-9-]{20,64}$/),capability:z.enum(['read','edit','cmd','powershell']),revision:z.number().int().nonnegative()}).strict().parse(await c.req.json());
     const row=actions.get(value.id);
     if (!row || row.engine!==p.session.token) throw new HTTPException(403,{message:'Action ownership required'});
     store.audit(p.user.id,value.event,value.capability,'client-reported',{id:value.id,revision:value.revision});return c.json({ok:true});
