@@ -1,0 +1,20 @@
+{
+  "origin": "https://managed.example.org:7443",
+  "port": 7443,
+  "gatewayUrl": "https://gateway.example.org/v1",
+  "tlsCert": "C:\\Deployment\\server-fullchain.pem",
+  "tlsKey": "C:\\Deployment\\server-key.pem",
+  "bootstrap": {
+    "adminEmail": "harness-admin@example.org",
+    "smtp": {
+      "enabled": true,
+      "host": "smtp.example.org",
+      "port": 587,
+      "mode": "starttls",
+      "serverName": "smtp.example.org",
+      "username": "harness-mail",
+      "from": "harness@example.org"
+    },
+    "smtpPassword": "ENTER_YOUR_SMTP_PASSWORD_IN_THE_PROTECTED_DEPLOYMENT_COPY"
+  }
+}

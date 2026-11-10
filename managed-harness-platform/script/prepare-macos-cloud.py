@@ -30,10 +30,11 @@ def add(base, relative, destination):
     files[destination] = source.read_bytes()
 
 
-for folder in ["src", "native", "packaging", "script", "test", "cloud"]:
+for folder in ["src", "native", "packaging", "script", "test", "cloud", "docs", "deployment"]:
     for source in sorted((root / folder).rglob("*")):
         add(root, source.relative_to(root), "managed-harness-platform/" + source.relative_to(root).as_posix())
-for name in ["package.json", "bun.lock", "tsconfig.json", "LICENSE", ".gitignore"]:
+for name in ["package.json", "bun.lock", "tsconfig.json", "LICENSE", ".gitignore",
+             "README.md", "RELEASE-NOTES.md", "VERIFICATION.md", "THIRD-PARTY-NOTICES.md"]:
     add(root, Path(name), "managed-harness-platform/" + name)
 
 # Upstream tracked source plus only reviewed managed additions. Never sweep all untracked files.
@@ -52,7 +53,7 @@ for name in sorted(set(tracked + additions)):
     add(fork, Path(name), "managed-opencode-fork/" + name)
 
 files[".github/workflows/macos-validation.yml"] = (root / "cloud/macos-validation.yml").read_bytes()
-files["README.md"] = (root / "cloud/README.md").read_bytes()
+files["README.md"] = (root / "cloud/REPOSITORY-README.md").read_bytes()
 files["SUPPORT.md"] = (root / "cloud/SUPPORT.md").read_bytes()
 if (root / "cloud/RESULTS.md").exists():
     files["RESULTS.md"] = (root / "cloud/RESULTS.md").read_bytes()

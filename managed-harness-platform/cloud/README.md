@@ -9,6 +9,10 @@ The requested Mac client targets are **macOS 14, 15, 26 and 27**. See
 [SUPPORT.md](SUPPORT.md) for architecture coverage, the macOS 14 host gap and the
 release acceptance requirements. These targets are not yet a client release claim.
 
+The final delivery requirements are in [RELEASING.md](RELEASING.md). Final
+installers belong in a versioned GitHub Release after their complete acceptance
+tests and independent review pass.
+
 The source includes a separate central `shell` permission for macOS zsh/bash,
 defaulting to Deny when reading older Windows policies. CMD and Windows PowerShell
 remain independent. The engine selects `/bin/zsh`, accepts only `/bin/zsh` or

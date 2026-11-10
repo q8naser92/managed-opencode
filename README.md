@@ -1,79 +1,49 @@
-# Hosted macOS validation preparation
+# Managed OpenCode
 
-This source snapshot prepares the managed OpenCode engine for macOS. It is not a
-Mac desktop release or an organization-ready Mac installer. The management server
-remains a Windows product. The previously delivered Windows 0.1.4 installers are
-unchanged.
+A Windows management server and managed endpoint clients for centrally approved
+models, AI capabilities and connectors. Code and commands execute on the user's
+endpoint; identity, policy and encrypted personal gateway keys are managed by the
+server.
 
-The requested Mac client targets are **macOS 14, 15, 26 and 27**. See
-[SUPPORT.md](SUPPORT.md) for architecture coverage, the macOS 14 host gap and the
-release acceptance requirements. These targets are not yet a client release claim.
+**Development status:** Windows 0.1.4 is an unsigned pilot candidate. Mac engine
+validation passed on the recorded macOS 15, 26 and 27 hosts. The Mac GUI and PKG
+are unfinished, macOS 14 remains untested, and a final installer release is not
+yet available.
 
-The source includes a separate central `shell` permission for macOS zsh/bash,
-defaulting to Deny when reading older Windows policies. CMD and Windows PowerShell
-remain independent. The engine selects `/bin/zsh`, accepts only `/bin/zsh` or
-`/bin/bash`, avoids user shell startup files, and reads enrollment only from
-`/Library/Application Support/ManagedOpenCodeCentral/Client`. Administrative
-ownership and permissions for this directory must be enforced by the future Mac
-installer and tested on real macOS before delivery.
+Requested deployment targets: Windows Server 2019/2022, Windows 11 25H2 clients,
+and macOS 14/15/26/27 clients on the architectures in [SUPPORT.md](SUPPORT.md).
+The server remains on Windows.
 
-## Running the prepared workflow
+## Installation and administration
 
-1. Review this source snapshot and choose a private GitHub repository.
-2. Upload the extracted source tree after approval. Do not upload lab directories,
-   deployed configuration, databases, API keys, SSH keys or release evidence.
-3. In GitHub Actions, manually start **Managed macOS engine validation (not a client release)**.
-4. The first job tests server code on Windows Server 2022. Then five separate jobs
-   build and execute engine tests on macOS 15 and 26 (Apple Silicon and Intel),
-   and macOS 27 (Apple Silicon). Each job verifies its actual OS and architecture.
-   macOS 14 needs a separate host and is not covered by a green hosted run.
-5. Download the `macos-engine-validation-<major>-<arch>` artifacts and have an independent
-   read-only reviewer judge the logs, tests and artifact hashes. A green workflow
-   only validates the engine scope below.
+- [Product overview](managed-harness-platform/README.md)
+- [Installation and deployment](managed-harness-platform/docs/INSTALLATION.md)
+- [Administration and user setup](managed-harness-platform/docs/ADMINISTRATION.md)
+- [Operations and recovery](managed-harness-platform/docs/OPERATIONS.md)
+- [Security boundaries](managed-harness-platform/docs/SECURITY.md)
+- [Build instructions](managed-harness-platform/docs/BUILDING.md)
+- [Deployment templates](managed-harness-platform/deployment)
 
-The workflow does not run automatically on pushes or pull requests. It has
-read-only repository permission, pinned action revisions, no repository secrets,
-15-minute Windows and 30-minute Mac job timeouts, and seven-day artifact retention.
-Private-repository runs consume the account's included Actions allowance and may
-incur charges under its billing settings. No workflow has been dispatched by
-preparing this bundle.
+## Validation and delivery
 
-## What these tests establish
+- [Final release requirements](managed-harness-platform/cloud/RELEASING.md)
+- [Windows pilot verification ledger](managed-harness-platform/VERIFICATION.md)
+- [Hosted Mac engine results](RESULTS.md)
+- [Hosted validation workflow](managed-harness-platform/cloud/README.md)
 
-Server policy schema compatibility, default denial, explicit approval, grant
-ownership, one-use consumption, central revocation and security event acceptance;
-engine configuration-source restrictions, strict HTTPS origin parsing, shell
-selection, child environment filtering, actual zsh/bash startup-file behavior;
-real synthetic HTTPS tests for custom-CA trust, invalid certificates, modified CA
-bundles, caller TLS overrides, inherited proxy/TLS environment and redirects;
-successful native architecture build and basic executable startup.
+Final delivery will be a versioned GitHub Release containing tested installers,
+matching source, documentation, checksums and independent review evidence. The
+exact final installers must pass the agreed acceptance matrix before publication.
+Source commits and CI engine artifacts do not establish full GUI/installer acceptance.
 
-The source snapshot includes upstream test fixtures and synthetic test certificates.
-These are development fixtures, not organization credentials. Dependency downloads
-come from the package registries described by the lockfiles and the upstream build.
+## Source layout and licensing
 
-## What remains before a Mac release
+`managed-harness-platform` contains the service, native client/setup, packaging,
+tests and guides. `managed-opencode-fork` contains the managed engine and upstream
+source. `SOURCE-MANIFEST.json` records source snapshot hashes, and
+`UPSTREAM-REVISION.txt` identifies the upstream base.
 
-- Native Mac desktop application: sign-in, email OTP, SAML/PKCE, API-key enrollment,
-  workspace selection, chat, approvals, connector account links and logout.
-- Administrator-owned PKG installation and server-address enrollment; tests with
-  non-admin users, multiple users, hostile existing paths and upgrade/repair.
-- Safe engine process supervision, including crash, logout, disconnect and policy
-  changes; explicit treatment of child processes that detach from their parent.
-- Verified HTTPS and custom-CA behavior in both the GUI and compiled engine.
-- End-to-end tests against the Windows server over a private test connection.
-  A hosted runner cannot reach an on-premises 192.168.x.x address automatically.
-- Interactive installer/GUI tests, including login and approvals; automation alone
-  does not establish that native dialogs and OS permission prompts work.
-- Developer ID signing and notarization for normal organizational distribution,
-  using the publisher's Apple Developer account; final independent review.
-
-Do not expose the management server publicly just to run these tests. A rented
-remote Mac with a private test connection is an option for the interactive and
-Windows-server integration tests. Preparing the bundle does not rent a Mac,
-publish source, dispatch an Actions run or enroll an Apple account. Actual runs
-require a separate authorized execution step; see RESULTS.md when present.
-
-References: [GitHub hosted runners](https://docs.github.com/en/actions/reference/runners/github-hosted-runners),
-[Apple Developer ID](https://developer.apple.com/developer-id/),
-[MacStadium remote Macs](https://macstadium.com/pricing).
+The management platform is MIT licensed; the fork and dependencies retain their
+own licenses. See [third-party notices](managed-harness-platform/THIRD-PARTY-NOTICES.md).
+Private lab configuration, credentials, databases and generated binaries are
+excluded. The repository remains private.
