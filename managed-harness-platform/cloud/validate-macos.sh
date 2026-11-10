@@ -16,7 +16,7 @@ cd "$root/managed-opencode-fork"
 bun install --frozen-lockfile
 cd packages/core
 bun run typecheck
-bun run script/test.ts test/managed-macos.test.ts test/managed-origin.test.ts test/managed-local-permission.test.ts test/config/enterprise.test.ts
+bun run script/test.ts test/managed-macos.test.ts test/managed-origin.test.ts test/managed-transport.test.ts test/managed-local-permission.test.ts test/config/enterprise.test.ts
 cd ../server
 bun test test/managed-routes.test.ts
 cd ../cli

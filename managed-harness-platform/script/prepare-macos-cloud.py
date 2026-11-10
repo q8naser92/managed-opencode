@@ -43,6 +43,7 @@ additions = [
     "packages/core/src/managed-macos.ts", "packages/core/src/managed-transport.ts",
     "packages/core/test/config/enterprise.test.ts", "packages/core/test/managed-local-permission.test.ts",
     "packages/core/test/managed-macos.test.ts", "packages/core/test/managed-origin.test.ts",
+    "packages/core/test/managed-transport.test.ts",
     "packages/server/src/managed-routes.ts", "packages/server/test/managed-routes.test.ts",
 ]
 for name in sorted(set(tracked + additions)):
