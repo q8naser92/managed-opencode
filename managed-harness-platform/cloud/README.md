@@ -23,9 +23,10 @@ installer and tested on real macOS before delivery.
 
 ## Running the prepared workflow
 
-1. Review this source snapshot and choose a private GitHub repository.
-2. Upload the extracted source tree after approval. Do not upload lab directories,
-   deployed configuration, databases, API keys, SSH keys or release evidence.
+1. Clone or fork the public `q8naser92/managed-opencode` repository and review the
+   workflow before enabling Actions in your own fork.
+2. Push only reviewed source. Keep deployed configuration, databases, API keys,
+   SSH keys and private lab evidence out of the repository and workflow logs.
 3. In GitHub Actions, manually start **Managed macOS engine validation (not a client release)**.
 4. The first job tests server code on Windows Server 2022. Then five separate jobs
    build and execute engine tests on macOS 15 and 26 (Apple Silicon and Intel),
@@ -38,9 +39,9 @@ installer and tested on real macOS before delivery.
 The workflow does not run automatically on pushes or pull requests. It has
 read-only repository permission, pinned action revisions, no repository secrets,
 15-minute Windows and 30-minute Mac job timeouts, and seven-day artifact retention.
-Private-repository runs consume the account's included Actions allowance and may
-incur charges under its billing settings. No workflow has been dispatched by
-preparing this bundle.
+Check your GitHub runner eligibility, allowance and billing settings before
+dispatching. This workflow is manual; preparing a source bundle alone does not
+run it. Previous authorized runs and their scope are recorded in RESULTS.md.
 
 ## What these tests establish
 
@@ -75,8 +76,9 @@ come from the package registries described by the lockfiles and the upstream bui
 Do not expose the management server publicly just to run these tests. A rented
 remote Mac with a private test connection is an option for the interactive and
 Windows-server integration tests. Preparing the bundle does not rent a Mac,
-publish source, dispatch an Actions run or enroll an Apple account. Actual runs
-require a separate authorized execution step; see RESULTS.md when present.
+publish source, dispatch an Actions run or enroll an Apple account. The source
+and recorded hosted runs have already been authorized; paid remote Mac rental
+would require a separate decision. See RESULTS.md for executed tests.
 
 References: [GitHub hosted runners](https://docs.github.com/en/actions/reference/runners/github-hosted-runners),
 [Apple Developer ID](https://developer.apple.com/developer-id/),

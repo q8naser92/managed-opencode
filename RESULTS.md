@@ -1,14 +1,15 @@
 # Hosted Mac engine validation — 10 November 2026
 
-The private repository is `q8naser92/managed-opencode-macos-validation`.
-The user authorized its creation, the source upload and the test workflow.
+The repository is `q8naser92/managed-opencode`. It was originally a private
+validation repository and was renamed for public source publication after the
+recorded runs. The tested commits and run IDs are preserved.
 The management server remains a Windows product. No Mac server is being shipped.
 
 ## Expanded version matrix
 
 The requested client targets are macOS **14, 15, 26 and 27**; see
 [SUPPORT.md](SUPPORT.md). The successful
-[run 42770628894](https://github.com/q8naser92/managed-opencode-macos-validation/actions/runs/42770628894)
+[run 42770628894](https://github.com/q8naser92/managed-opencode/actions/runs/42770628894)
 tested commit `405513214e792271ffa104d4e861b0f946930dbd` on the following real hosts:
 
 | Requested major | Actual tested version/build | Architecture | Engine result |
@@ -47,9 +48,9 @@ client/installer acceptance checks listed below.
 
 ## Earlier macOS 15 validation
 
-The independently reviewed successful [run 42768960214](https://github.com/q8naser92/managed-opencode-macos-validation/actions/runs/42768960214)
+The independently reviewed successful [run 42768960214](https://github.com/q8naser92/managed-opencode/actions/runs/42768960214)
 tested commit `0534c2a3f18bc1703744802304a3e63eb627f5a8`.
-An earlier successful [run 42768144682](https://github.com/q8naser92/managed-opencode-macos-validation/actions/runs/42768144682)
+An earlier successful [run 42768144682](https://github.com/q8naser92/managed-opencode/actions/runs/42768144682)
 tested the engine preparation before the extra HTTPS cases were added.
 
 | Environment | Result |
@@ -82,7 +83,7 @@ caught and closed a source-bundle filtering error before upload.
 This is **not a Mac client release**. The Mac desktop GUI and PKG installer have
 not been implemented. Protected installed enrollment, GUI authentication against
 the Windows server, compiled-engine HTTPS integration, process supervision,
-signing and notarization have not been validated. No actual bank gateway was
+signing and notarization have not been validated. No actual production gateway was
 contacted by these synthetic tests. The existing Windows 0.1.4 release archives
 remain unchanged.
 

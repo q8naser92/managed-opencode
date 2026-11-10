@@ -2,7 +2,8 @@
 
 The user requested a final source push and downloadable, tested installers in
 this repository's GitHub Releases. This is the agreed delivery requirement.
-The repository remains private unless the user separately requests publication.
+The source repository is public at `q8naser92/managed-opencode`. Public source
+availability does not establish installer readiness.
 
 **Current status: final release blocked.** Windows 0.1.4 is an unsigned pilot
 candidate. The Mac artifacts validate the engine only; the Mac GUI and PKG are
@@ -13,7 +14,7 @@ unfinished, and macOS 14 is untested. No final release has been published.
 | Component | Required installed test environments |
 | --- | --- |
 | Windows management server | Windows Server 2019 and 2022 |
-| Windows endpoint client | Windows 11 25H2 (AKSB lab client) |
+| Windows endpoint client | Windows 11 25H2 |
 | Mac endpoint client | macOS 14, 15 and 26 on Apple Silicon and Intel; macOS 27 on Apple Silicon |
 
 Record the actual OS patch/build and architecture for each result. Missing hosts,
@@ -64,7 +65,7 @@ private lab files. Upload only reviewed deployment templates and sanitized evide
 4. Obtain the independent read-only reviewer's explicit release decision, with
    evidence references and final hashes. Required unfinished work blocks release.
 5. Create a version tag at the candidate commit and a draft GitHub Release in the
-   existing private repository. Attach installers, matching source, guides,
+   public `managed-opencode` repository. Attach installers, matching source, guides,
    checksums and sanitized evidence. Treat the version tag as immutable.
 6. Download the uploaded assets and verify their SHA256 values against the reviewed
    candidates. Check tag/commit identity, asset completeness, notes and repository
@@ -73,5 +74,5 @@ private lab files. Upload only reviewed deployment templates and sanitized evide
 
 The user's instruction authorizes the final source push and release upload once
 these requirements pass; another confirmation for those actions is unnecessary.
-It does not authorize a new paid Mac rental, public repository conversion or
-disclosure of private organization data.
+Public source publication is also authorized. This does not authorize a new paid
+Mac rental or disclosure of private organization data.

@@ -20,7 +20,9 @@ The client requires a live server connection. It has no offline policy fallback.
 
 Use `ManagedOpenCode-Setup.exe` for a graphical Server/Client installation, or the separate Client and Server MSI packages for enterprise deployment. Supply the client with the server's HTTPS DNS name or IP address **including the selected port**. A valid certificate must cover that address.
 
-- [Installation and configuration](docs/INSTALLATION.md)
+- [Step-by-step configuration](docs/CONFIGURATION.md)
+- [Problem and solution](docs/PROBLEM-AND-SOLUTION.md)
+- [Installation and deployment](docs/INSTALLATION.md)
 - [Administration and user workflow](docs/ADMINISTRATION.md)
 - [Security boundary and logging](docs/SECURITY.md)
 - [Operations and recovery](docs/OPERATIONS.md)

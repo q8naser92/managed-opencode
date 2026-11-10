@@ -54,6 +54,7 @@ for name in sorted(set(tracked + additions)):
 
 files[".github/workflows/macos-validation.yml"] = (root / "cloud/macos-validation.yml").read_bytes()
 files["README.md"] = (root / "cloud/REPOSITORY-README.md").read_bytes()
+files["LICENSE"] = (root / "LICENSE").read_bytes()
 files["SUPPORT.md"] = (root / "cloud/SUPPORT.md").read_bytes()
 if (root / "cloud/RESULTS.md").exists():
     files["RESULTS.md"] = (root / "cloud/RESULTS.md").read_bytes()

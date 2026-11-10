@@ -5,7 +5,7 @@ test("managed enrollment canonicalizes standard HTTPS ports and preserves custom
   for (const [input, expected] of [
     ["https://MANAGER.example:443/", "https://manager.example"],
     ["https://manager.example:9443", "https://manager.example:9443"],
-    ["https://192.168.1.118:7443/", "https://192.168.1.118:7443"],
+    ["https://203.0.113.10:7443/", "https://203.0.113.10:7443"],
   ]) {
     expect(ManagedTransport.parseSettings(JSON.stringify({ serverOrigin: input })).serverOrigin).toBe(expected)
   }
