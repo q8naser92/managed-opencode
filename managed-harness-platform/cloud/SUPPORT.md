@@ -32,11 +32,12 @@ states that its macOS 14 runners retired on 2 November 2026. A successful 15,
 open validation requirement. No additional Mac rental or cloud account was
 created as part of updating this matrix.
 
-On a separately provisioned real macOS 14 test host, run from the reviewed source
-repository root, with Bun 1.4.4 installed:
+On a separately provisioned real macOS 14 test host, clone and check out the exact
+reviewed repository commit. Run from that Git checkout's root with Bun 1.4.4
+installed, recording the source commit explicitly:
 
 ```sh
-EXPECTED_MAC_MAJOR=14 EXPECTED_MAC_ARCH=arm64 bash managed-harness-platform/cloud/validate-macos.sh
+GITHUB_SHA="$(git rev-parse HEAD)" EXPECTED_MAC_MAJOR=14 EXPECTED_MAC_ARCH=arm64 bash managed-harness-platform/cloud/validate-macos.sh
 # Use EXPECTED_MAC_ARCH=x64 on an Intel Mac instead.
 ```
 

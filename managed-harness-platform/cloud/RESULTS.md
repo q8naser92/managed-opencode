@@ -4,6 +4,49 @@ The private repository is `q8naser92/managed-opencode-macos-validation`.
 The user authorized its creation, the source upload and the test workflow.
 The management server remains a Windows product. No Mac server is being shipped.
 
+## Expanded version matrix
+
+The requested client targets are macOS **14, 15, 26 and 27**; see
+[SUPPORT.md](SUPPORT.md). The successful
+[run 42770628894](https://github.com/q8naser92/managed-opencode-macos-validation/actions/runs/42770628894)
+tested commit `405513214e792271ffa104d4e861b0f946930dbd` on the following real hosts:
+
+| Requested major | Actual tested version/build | Architecture | Engine result |
+| --- | --- | --- | --- |
+| 14 | No test host available | Apple Silicon and Intel | **Not tested; still required** |
+| 15 | 15.8.2 / 24H232 | Apple Silicon | Passed |
+| 15 | 15.7.9 / 24G830 | Intel | Passed |
+| 26 | 26.7.2 / 25G332 | Apple Silicon | Passed |
+| 26 | 26.6.1 / 25G76 | Intel | Passed |
+| 27 | 27.0.1 / 26A434 | Apple Silicon | Passed |
+
+The Windows Server 2022 job again passed typechecking and 47 tests / 346
+assertions. Each of the five Mac jobs passed core typechecking, 17 core tests /
+78 assertions, and one route test / 56 assertions. Only the Windows-specific test
+was skipped on each Mac. Each job built and started its native engine executable.
+
+The script rejects a host whose actual OS major or runtime architecture differs
+from the requested matrix entry. Each artifact includes `host.json` with the
+actual OS version/build, architecture, tested commit, Bun and image versions, plus
+the log, executable, SHA256 manifest and Mach-O load-command metadata. Each
+architecture produced the same engine hash across all tested major versions,
+matching the two hashes below. The engine's recorded minimum OS is 13.0; that
+metadata does **not** prove macOS 14 execution or compatibility of the future GUI,
+installer and native dependencies.
+
+Full logs, run metadata and artifact metadata are retained locally in
+`test-results/macos-cloud-run-42770628894*`; downloaded artifacts are in
+`cloud-output/validation-42770628894/<major>-<arch>/`.
+
+The independent read-only reviewer judged this expanded run a **scoped PASS for
+engine validation across all five tested combinations**. It independently checked
+the five remote artifact ZIP digests, OS/build/architecture/commit records, native
+headers, executable hashes and logs; all 30 saved evidence files matched their
+remote counterparts. This decision excludes macOS 14 and the unfinished full
+client/installer acceptance checks listed below.
+
+## Earlier macOS 15 validation
+
 The independently reviewed successful [run 42768960214](https://github.com/q8naser92/managed-opencode-macos-validation/actions/runs/42768960214)
 tested commit `0534c2a3f18bc1703744802304a3e63eb627f5a8`.
 An earlier successful [run 42768144682](https://github.com/q8naser92/managed-opencode-macos-validation/actions/runs/42768144682)
