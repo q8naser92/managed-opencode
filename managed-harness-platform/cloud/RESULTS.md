@@ -1,6 +1,6 @@
 # Hosted Mac engine validation — 10 November 2026
 
-The repository is `q8naser92/managed-opencode`. It was originally a private
+The repository is `r0kud0mukur0/managed-opencode`. It was originally a private
 validation repository and was renamed for public source publication after the
 recorded runs. The tested commits and run IDs are preserved.
 The management server remains a Windows product. No Mac server is being shipped.
@@ -9,7 +9,7 @@ The management server remains a Windows product. No Mac server is being shipped.
 
 The requested client targets are macOS **14, 15, 26 and 27**; see
 [SUPPORT.md](SUPPORT.md). The successful
-[run 42770628894](https://github.com/q8naser92/managed-opencode/actions/runs/42770628894)
+[run 42770628894](https://github.com/r0kud0mukur0/managed-opencode/actions/runs/42770628894)
 tested commit `405513214e792271ffa104d4e861b0f946930dbd` on the following real hosts:
 
 | Requested major | Actual tested version/build | Architecture | Engine result |
@@ -48,9 +48,9 @@ client/installer acceptance checks listed below.
 
 ## Earlier macOS 15 validation
 
-The independently reviewed successful [run 42768960214](https://github.com/q8naser92/managed-opencode/actions/runs/42768960214)
+The independently reviewed successful [run 42768960214](https://github.com/r0kud0mukur0/managed-opencode/actions/runs/42768960214)
 tested commit `0534c2a3f18bc1703744802304a3e63eb627f5a8`.
-An earlier successful [run 42768144682](https://github.com/q8naser92/managed-opencode/actions/runs/42768144682)
+An earlier successful [run 42768144682](https://github.com/r0kud0mukur0/managed-opencode/actions/runs/42768144682)
 tested the engine preparation before the extra HTTPS cases were added.
 
 | Environment | Result |

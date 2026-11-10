@@ -6,6 +6,8 @@ A self-hosted Windows management service and desktop client for centrally govern
 
 Mac client development targets **macOS 14, 15, 26 and 27**. The server remains on Windows. See the [Mac support requirements](cloud/SUPPORT.md) and [hosted engine results](cloud/RESULTS.md); the Mac GUI and PKG are unfinished, and engine tests do not establish installer or full-client compatibility.
 
+Download the preserved Windows EXE/MSIs, complete deployment package, source and checksums from the [v0.1.4-pilot.1 Windows pilot prerelease](https://github.com/r0kud0mukur0/managed-opencode/releases/tag/v0.1.4-pilot.1). The installed version remains 0.1.4; the prerelease is not final production or Mac-client acceptance.
+
 ## What administrators control
 
 - One shared model catalog and LiteLLM HTTPS gateway. Cloud models are disabled by default and must also be individually approved.

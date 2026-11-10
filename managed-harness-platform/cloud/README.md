@@ -23,7 +23,7 @@ installer and tested on real macOS before delivery.
 
 ## Running the prepared workflow
 
-1. Clone or fork the public `q8naser92/managed-opencode` repository and review the
+1. Clone or fork the public `r0kud0mukur0/managed-opencode` repository and review the
    workflow before enabling Actions in your own fork.
 2. Push only reviewed source. Keep deployed configuration, databases, API keys,
    SSH keys and private lab evidence out of the repository and workflow logs.

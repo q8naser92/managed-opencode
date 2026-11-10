@@ -2,12 +2,19 @@
 
 The user requested a final source push and downloadable, tested installers in
 this repository's GitHub Releases. This is the agreed delivery requirement.
-The source repository is public at `q8naser92/managed-opencode`. Public source
+The source repository is public at `r0kud0mukur0/managed-opencode`. Public source
 availability does not establish installer readiness.
 
 **Current status: final release blocked.** Windows 0.1.4 is an unsigned pilot
 candidate. The Mac artifacts validate the engine only; the Mac GUI and PKG are
 unfinished, and macOS 14 is untested. No final release has been published.
+
+The preserved Windows 0.1.4 installers are published separately as the
+[v0.1.4-pilot.1 Windows pilot prerelease](https://github.com/r0kud0mukur0/managed-opencode/releases/tag/v0.1.4-pilot.1).
+Its reviewed publication scope covers unchanged tested Windows binaries and
+sanitized documentation/source/evidence packaging. This does not satisfy or
+replace the final cross-platform acceptance gate below. Its tag preserves the
+archived Windows source; the development branch contains later Mac engine work.
 
 ## Required release coverage
 

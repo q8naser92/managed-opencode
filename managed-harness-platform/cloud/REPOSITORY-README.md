@@ -6,6 +6,8 @@ Central administration for an OpenCode coding assistant that runs on the user's 
 
 [Configure your deployment](managed-harness-platform/docs/CONFIGURATION.md) · [Problem and solution](managed-harness-platform/docs/PROBLEM-AND-SOLUTION.md) · [Test results](RESULTS.md) · [Release requirements](managed-harness-platform/cloud/RELEASING.md)
 
+**Windows pilot download:** [v0.1.4-pilot.1](https://github.com/r0kud0mukur0/managed-opencode/releases/tag/v0.1.4-pilot.1) provides the preserved, tested Windows 0.1.4 EXE/MSIs, documentation, source and checksums. It is an unsigned prerelease with the limitations described above; no Mac installer is included.
+
 ## Why this project exists
 
 An AI gateway such as LiteLLM can control model access and record prompts and responses. It cannot, by itself, decide whether a coding assistant may run PowerShell on a laptop, load a local plugin, change its provider configuration or call a new MCP connector.
@@ -52,7 +54,7 @@ These controls apply to this application. Users retain their normal terminal acc
 
 ## Configure a pilot
 
-1. Read the [support matrix](SUPPORT.md) and [verification ledger](managed-harness-platform/VERIFICATION.md). Build a candidate using the [build guide](managed-harness-platform/docs/BUILDING.md); final downloadable installers will appear in [Releases](https://github.com/q8naser92/managed-opencode/releases) only after acceptance.
+1. Read the [support matrix](SUPPORT.md) and [verification ledger](managed-harness-platform/VERIFICATION.md). Build a candidate using the [build guide](managed-harness-platform/docs/BUILDING.md); final downloadable installers will appear in [Releases](https://github.com/r0kud0mukur0/managed-opencode/releases) only after acceptance.
 2. Prepare a Windows server, DNS name, available HTTPS port, full certificate chain, LiteLLM URL and either TLS SMTP or SAML. Windows Server 2019 and 2022 are deployment targets with recorded pilot evidence.
 3. Install the Server role using the graphical EXE, or deploy the Server MSI with a protected JSON configuration. Server Core requires silent installation and browser administration from another machine.
 4. Sign into the web console. Approve destinations and model IDs, set AI action policy, create users and configure connectors. Models start empty and cloud access starts disabled.
@@ -80,7 +82,7 @@ The [configuration walkthrough](managed-harness-platform/docs/CONFIGURATION.md) 
 Clone this repository, then follow the build guide for prerequisites and pinned tool versions:
 
 ```powershell
-git clone https://github.com/q8naser92/managed-opencode.git
+git clone https://github.com/r0kud0mukur0/managed-opencode.git
 cd managed-opencode/managed-harness-platform
 bun install --frozen-lockfile
 bun run check

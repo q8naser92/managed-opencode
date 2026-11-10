@@ -2,7 +2,9 @@
 
 This walkthrough covers the implemented Windows server/client configuration. The preserved Windows 0.1.4 installer is an unsigned pilot with bounded acceptance; current development source also contains Mac engine work. There is no final cross-platform installer release. The Mac GUI and PKG are unfinished, so the Windows client steps below cannot be used as a Mac installation procedure.
 
-Use the [build guide](BUILDING.md) to produce a candidate from source, or use an explicitly reviewed pilot package you already have. Future final packages belong in [GitHub Releases](https://github.com/q8naser92/managed-opencode/releases) after the [release gate](../cloud/RELEASING.md). Do not substitute upstream OpenCode installers: they do not include this management boundary.
+Use the [build guide](BUILDING.md) to produce a candidate from source, or use an explicitly reviewed pilot package you already have. Future final packages belong in [GitHub Releases](https://github.com/r0kud0mukur0/managed-opencode/releases) after the [release gate](../cloud/RELEASING.md). Do not substitute upstream OpenCode installers: they do not include this management boundary.
+
+The preserved Windows 0.1.4 binaries are available in the [v0.1.4-pilot.1 prerelease](https://github.com/r0kud0mukur0/managed-opencode/releases/tag/v0.1.4-pilot.1), together with documentation, source, checksums and scoped review evidence. Start with its complete deployment ZIP and read its known limitations before installing.
 
 ## 1. Plan addresses, trust and prerequisites
 
